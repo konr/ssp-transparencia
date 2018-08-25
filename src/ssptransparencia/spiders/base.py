@@ -89,19 +89,20 @@ class SsptransparenciaBaseSpider(scrapy.Spider):
         count = 0
         year = response.meta['nav_ano']
         month = response.meta['nav_mes']
-        url = 'http://www.ssp.sp.gov.br/transparenciassp/Consulta.aspx/AbrirBoletim'
+        url = 'http://www.ssp.sp.gov.br/transparenciassp/Consulta.aspx/AbrirBoletim2'
         headers = {'Content-Type': 'application/json; charset=UTF-8;'}
         _first = lambda sel, xpath: sel.xpath(xpath).extract_first()
         for row in response.css('table#cphBody_grdListBO tr'):
             if row.xpath('@class').extract_first() in ['row1', 'row2']:
                 count += 1
                 row_onclick = row.xpath('./td[1]/a/@onclick').extract_first()
-                m = re.match(r'relatorioBO\((.*),(.*),(.*)\);', row_onclick)
+                m = re.match(r'relatorioBO2\((.*),(.*),(.*),(.*)\);', row_onclick)
                 assert m
                 year = m.group(1).strip()
                 occurrence = m.group(2).strip()
                 station = m.group(3).strip()
-                body = '{ anoBO: %s, numBO: %s, delegacia: %s }' % (year, occurrence, station)
+                nature = m.group(4).strip()
+                body = '{ anoBO: %s, numBO: %s, delegacia: %s, natureza: %s }' % (year, occurrence, station, nature)
                 bo_id = '%s-%s-%s' % (year, occurrence, station)
                 meta = dict(response.meta, **{
                     'id': bo_id,
