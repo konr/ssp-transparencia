@@ -91,15 +91,15 @@ Comandos:
 * $ docker build -f Dockerfile -t eltermann/ssp-transparencia:master .
 * $ docker run -v /caminho/destino/dos/arquivos:/tmp/target_dir eltermann/ssp-transparencia:master
 
-### Opção 2 - diretamente
+### Opção 2 - via Pipenv
 
-Requerimentos: python e scrapy 1.1.0
+Requerimentos: python e [pipenv](https://github.com/pypa/pipenv)
 
 Comandos:
 
-* $ mkdir -p /caminho/destino/dos/arquivos
-* $ cd ssptransparencia
-* $ scrapy crawl ssptransparencia -a target_dir=/caminho/destino/dos/arquivos
+* $ pipenv install --python 2.7
+* $ pipenv shell
+* $ scrapy crawl ssptransparencia -a target_dir=.
 
 
 ## Autores
